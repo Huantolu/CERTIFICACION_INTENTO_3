@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sesion.css') }}">
+</head>
+<body>
+    <div class="dos-columnas">
+
+        <form action="/crear_usuario" method="post" class="caja">
+            <h1>Registro</h1>
+            <label for="nombre_usuario_registro">Nombre:</label>
+            <input type="text" id="nombre_usuario_registro" name="nombre">
+            <br><br>
+            <label for="apellido_usuario_registro">Apellido:</label>
+            <input type="text" id="apellido_usuario_registro" name="apellido">
+            <br><br>
+            <label for="email_usuario_registro">E-mail:</label>
+            <input type="email" id="email_usuario_registro" name="email">
+            <br><br>
+            <label for="password_usuario_registro">Contraseña:</label>
+            <input type="password" id="password_usuario_registro" name="password">
+            <br><br>
+            <label for="password_usuario_registro_conf">Conf. Contraseña:</label>
+            <input type="password" id="password_usuario_registro_conf" name="password_conf">
+            <br><br>
+            <input type="submit" value="Registrar" class="boton">
+            {% with mensajes = get_flashed_messages(category_filter=['registro']) %}
+                {% for mensaje in mensajes %}
+                    <p class="error">{{ mensaje }}</p>
+                {% endfor %}
+            {% endwith %}
+        </form>
+
+        <form action="/iniciar_sesion" method="post" class="caja">
+            <h1>Inicio Sesión</h1>
+            <label for="email_inicio_sesion">E-mail:</label>
+            <input type="email" id="email_inicio_sesion" name="email_inicio_sesion">
+            <br><br>
+            <label for="password_inicio_sesion">Contraseña:</label>
+            <input type="password" id="password_inicio_sesion" name="password_inicio_sesion">
+            <br><br>
+            <input type="submit" value="Iniciar Sesión" class="boton">
+            {% with mensajes = get_flashed_messages(category_filter=['inicio_sesion']) %}
+                {% for mensaje in mensajes %}
+                    <p class="error">{{ mensaje }}</p>
+                {% endfor %}
+            {% endwith %}
+        </form>
+    </div>
+</body>
+</html>

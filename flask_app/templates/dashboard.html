@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard</title>
+</head>
+<body>
+    <div class="superior">
+        <h1>Bienvenid@ {{session['nombre']}}</h1>
+        <a href="/formulario_mision">
+            <button>Nueva Misión</button>
+        </a>
+        <!-------------------------------------->
+        <a href="/cerrar_sesion">
+            <button>Cerrar Sesión</button>
+        </a>
+    </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Líder</th>
+                    <th>Fecha</th>
+                    <th>Volunt. Necesarios</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mision in misiones %}
+                <tr>
+                    <td>{{ mision.nombre }}</td>
+                    <td>{{ usuario.nombre }}</td>
+                    <td>{{ mision.fecha }}</td>
+                    <td>{{ mision.voluntarios_necesarios }}</td>
+                    <td>
+                        <a href="/ver/{{ mision.id }}">Ver</a>
+                        <!-- Editar o borrar si es el creador del viaje -->
+                        {% if viaje.usuarios_id == session['usuario_id'] %}
+                        <a href="/editar/{{ mision.id }}">Editar</a>
+
+                        <!-- Por ahora un botón -->
+                        <form action="/eliminar/{{ mision.id }}" method="POST" style="display: inline;">
+                            <button type="submit">Borrar</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+</body>
+</html>
