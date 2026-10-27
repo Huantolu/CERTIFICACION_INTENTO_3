@@ -6,8 +6,9 @@
     <title>dashboard</title>
 </head>
 <body>
-    <div class="superior">
-        <h1>Bienvenid@ {{session['nombre']}}</h1>
+    <div class="menu">
+        <img src="../static/img/people-fill.svg" alt="">
+        <h1 class="title">VoluntaMe</h1>
         <a href="/formulario_mision">
             <button>Nueva Misión</button>
         </a>
@@ -15,6 +16,9 @@
         <a href="/cerrar_sesion">
             <button>Cerrar Sesión</button>
         </a>
+    </div>
+    <div class="superior">
+        <h1>Bienvenid@ {{session['nombre']}}</h1>    
     </div>
         <table>
             <thead>

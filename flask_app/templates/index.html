@@ -7,25 +7,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
+    <div class="menu">
+        <img src="../static/img/people-fill.svg" alt="">
+        <h1 class="title">VoluntaMe</h1>
+    </div>
     <div class="dos-columnas">
 
         <form action="/crear_usuario" method="post" class="caja">
             <h1>Registro</h1>
             <label for="nombre_usuario_registro">Nombre:</label>
             <input type="text" id="nombre_usuario_registro" name="nombre">
-            <br><br>
+            <br>
             <label for="apellido_usuario_registro">Apellido:</label>
             <input type="text" id="apellido_usuario_registro" name="apellido">
-            <br><br>
+            <br>
             <label for="email_usuario_registro">E-mail:</label>
             <input type="email" id="email_usuario_registro" name="email">
-            <br><br>
+            <br>
             <label for="password_usuario_registro">Contraseña:</label>
             <input type="password" id="password_usuario_registro" name="password">
-            <br><br>
+            <br>
             <label for="password_usuario_registro_conf">Conf. Contraseña:</label>
             <input type="password" id="password_usuario_registro_conf" name="password_conf">
-            <br><br>
+            <br>
             <input type="submit" value="Registrar" class="boton">
             {% with mensajes = get_flashed_messages(category_filter=['registro']) %}
                 {% for mensaje in mensajes %}
