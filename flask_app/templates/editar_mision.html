@@ -4,9 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Misión</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='sesion.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mision_formulario.css') }}">
 </head>
 <body>
+    <div class="menu">
+        <img src="../static/img/people-fill.svg" alt="">
+        <h1 class="title">VoluntaMe</h1>
+        <div class="botones_menu">
+            <a href="/formulario_mision">
+                <button>Crear Misión</button>
+            </a>
+            <!-------------------------------------->
+            <a href="/cerrar_sesion">
+                <button>Cerrar Sesión</button>
+            </a>
+        </div>
+    </div>
         <form action="/editar_mision" method="post" class="caja">
             <h1>Editar Misión</h1>
             <input type="hidden" name="id" value="{{mision.id}}">
@@ -22,7 +35,7 @@
             <label for="descripcion">Descripción:</label>
             <input type="text" id="descripcion" name="descripcion" value="{{ mision.descripcion }}">
             <br><br>
-            <input type="submit" value="Actualizar">
+            <input class="submit" type="submit" value="Actualizar">
             {% with mensajes = get_flashed_messages(category_filter=['registro']) %}
                 {% for mensaje in mensajes %}
                     <p class="error">{{ mensaje }}</p>

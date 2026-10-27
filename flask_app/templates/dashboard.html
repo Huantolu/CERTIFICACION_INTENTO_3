@@ -11,8 +11,8 @@
         <img src="../static/img/people-fill.svg" alt="">
         <h1 class="title">VoluntaMe</h1>
         <div class="botones_menu">
-            <a href="/dashboard">
-                <button>Inicio</button>
+            <a href="/formulario_mision">
+                <button>Crear Misión</button>
             </a>
             <!-------------------------------------->
             <a href="/cerrar_sesion">
@@ -20,45 +20,47 @@
             </a>
         </div>
     </div>
-    <div class="superior">
-        <h1>Bienvenid@ {{session['nombre']}}</h1>    
-    </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Líder</th>
-                    <th>Fecha</th>
-                    <th>Volunt. Necesarios</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-               
-                {% for mision in misiones %}
-                <tr>
-                    <td>{{ mision.nombre }}</td>
-                    {% for lider in lideres %}
-                    <td>{{ lider.nombre }}</td>
-                    {% endfor %}
-                    <td>{{ mision.fecha }}</td>
-                    <td>{{ mision.voluntarios_necesarios }}</td>
-                    <td>
-                        <a href="{{ url_for('ver_mision', mision_id=mision.id) }}">Ver</a>
-                        <!-- Editar o borrar si es el creador del viaje -->
-                        {% if mision.usuarios_id == session['usuario_id'] %}
-                        <a href="/editar/{{ mision.id }}">Editar</a>
+    <div tabla>
+        <div class="fondo_tabla">
+            <div class="superior">
+                <h1>Bienvenid@ {{session['nombre']}}</h1>    
+            </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Líder</th>
+                            <th>Fecha</th>
+                            <th>Volunt. Necesarios</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for mision in misiones %}
+                        <tr>
+                            <td>{{ mision.nombre }}</td>
+                            <td>{{ mision.usuario_nombre }}</td>
+                            <td>{{ mision.fecha }}</td>
+                            <td>{{ mision.voluntarios_necesarios }}</td>
+                            <td>
+                                <a href="{{ url_for('ver_mision', mision_id=mision.id) }}">Ver</a>
 
-                        <!-- Por ahora un botón -->
-                        <form action="/eliminar/{{ mision.id }}" method="POST" style="display: inline;">
-                            <button type="submit">Borrar</button>
-                        </form>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
+                                {% if mision.usuarios_id == session['usuario_id'] %}
+                                <a href="/editar/{{ mision.id }}">Editar</a>
+
+                                <form action="/eliminar/{{ mision.id }}" method="POST"
+                                    style="display: inline;">
+                                    <button type="submit">Borrar</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+        </div>
+    </div>    
 </body>
 </html>

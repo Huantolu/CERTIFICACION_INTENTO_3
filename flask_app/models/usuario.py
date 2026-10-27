@@ -26,13 +26,13 @@ class Usuario:
     @classmethod
     def save(cls, data):
         query= "INSERT INTO usuarios (nombre, apellido, email, password, created_at, updated_at) VALUES (%(nombre)s,%(apellido)s,%(email)s,%(password)s, NOW(), NOW());"
-        return connectToMySQL('VoluntaMe').query_db(query, data)
+        return connectToMySQL('base_datos_intento_3').query_db(query, data)
 
     #Metodos para ver registros
     @classmethod
     def get_all(cls):
         query = "SELECT * FROM usuarios;"
-        usuario_en_db= connectToMySQL('VoluntaMe').query_db(query)
+        usuario_en_db= connectToMySQL('base_datos_intento_3').query_db(query)
         usuarios = []
 
         for elemento in usuario_en_db:
@@ -43,7 +43,7 @@ class Usuario:
     @classmethod
     def get_by_id(cls, datos):
         query= "SELECT * FROM usuarios WHERE id = %(id)s;"
-        usuario_en_db= connectToMySQL('VoluntaMe').query_db(query, datos)
+        usuario_en_db= connectToMySQL('base_datos_intento_3').query_db(query, datos)
         if not usuario_en_db:
             return None
         return cls(usuario_en_db[0])
@@ -53,7 +53,7 @@ class Usuario:
     @classmethod
     def get_by_email(cls, datos):
         query= "SELECT * FROM usuarios WHERE email = %(email)s;"
-        usuario_en_db= connectToMySQL('VoluntaMe').query_db(query, datos)
+        usuario_en_db= connectToMySQL('base_datos_intento_3').query_db(query, datos)
         if not usuario_en_db:
             return None
         return cls(usuario_en_db[0])
@@ -63,14 +63,14 @@ class Usuario:
         
         query= "UPDATE usuarios SET nombre=%(nombre)s, apellido=%(apellido)s, email=%(email)s, password=%(password)s, updated_at = NOW() WHERE id=%(id)s"
 
-        return connectToMySQL('VoluntaMe').query_db(query, datos)
+        return connectToMySQL('base_datos_intento_3').query_db(query, datos)
 
     @classmethod
     def delete(cls, datos):
         
         query= "DELETE FROM usuarios WHERE id=%(id)s"
 
-        return connectToMySQL('VoluntaMe').query_db(query, datos)
+        return connectToMySQL('base_datos_intento_3').query_db(query, datos)
 
     @staticmethod
     def validar_registro(formulario):

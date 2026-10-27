@@ -4,11 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nueva Misión</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='sesion.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mision_formulario.css') }}">
 </head>
 <body>
+    <div class="menu">
+        <img src="../static/img/people-fill.svg" alt="">
+        <h1 class="title">VoluntaMe</h1>
+        <div class="botones_menu">
+            <a href="/formulario_mision">
+                <button>Crear Misión</button>
+            </a>
+            <!-------------------------------------->
+            <a href="/cerrar_sesion">
+                <button>Cerrar Sesión</button>
+            </a>
+        </div>
+    </div>
         <form action="/crear_mision" method="post" class="caja">
-            <h1>Registro</h1>
+            <h1>Nueva Misión</h1>
             <label for="Nombre_mision">Nombre:</label>
             <input type="text" id="Nombre_mision" name="nombre">
             <br><br>
@@ -21,7 +34,7 @@
             <label for="descripcion">Descripción:</label>
             <input type="text" id="descripcion" name="descripcion">
             <br><br>
-            <input type="submit" value="Crear">
+            <input class="submit" type="submit" value="Crear">
             {% with mensajes = get_flashed_messages(category_filter=['registro']) %}
                 {% for mensaje in mensajes %}
                     <p class="error">{{ mensaje }}</p>

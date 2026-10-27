@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mision.css') }}">
     <title>Detalles de la misión</title>
 </head>
 <body>
-
     <div class="menu">
         <img src="{{ url_for('static', filename='img/people-fill.svg') }}" alt="">
         <h1 class="title">VoluntaMe</h1>
@@ -22,14 +22,16 @@
             </a>
         </div>
     </div>
-
-    <h1>Detalles de la misión</h1>
-
-    <h2>{{ mision.nombre }}</h2>
-
-    <a href="/dashboard">
-        <button>Volver</button>
-    </a>
-
+    <div class="info">
+        <h1>{{ mision.nombre }}</h1>
+        <h3>Líder:</h3>
+        <p>{{ lider.nombre if lider else 'No disponible' }}</p>
+        <h3>Fecha:</h3>
+        <p>{{ mision.fecha }}</p>
+        <h3>Voluntarios Necesarios:</h3>
+        <p>{{ mision.voluntarios_necesarios }} Voluntario/s</p>
+        <h3>Descripción:</h3>
+        <p>{{ mision.descripcion }}</p>
+    </div>
 </body>
 </html>

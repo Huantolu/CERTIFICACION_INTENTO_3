@@ -14,6 +14,9 @@ class Mision:
         self.updated_at = data.get('updated_at')
         self.usuarios_id = data.get('usuarios_id')
 
+        # Nombre del líder obtenido mediante el JOIN
+        self.usuario_nombre = data.get('usuario_nombre')
+
     #registrar usuario / CREAR
     @classmethod
     def save(cls, data):
@@ -21,7 +24,7 @@ class Mision:
         INSERT INTO misiones (nombre, fecha, voluntarios_necesarios, descripcion, usuarios_id)
         VALUES (%(nombre)s, %(fecha)s, %(voluntarios_necesarios)s, %(descripcion)s, %(usuarios_id)s)
         """
-        return connectToMySQL("VoluntaMe").query_db(query, data)
+        return connectToMySQL("base_datos_intento_3").query_db(query, data)
 
     #Metodos para ver registros
     @classmethod
@@ -34,7 +37,7 @@ class Mision:
         """
 
 
-        results = connectToMySQL("VoluntaMe").query_db(query)
+        results = connectToMySQL("base_datos_intento_3").query_db(query)
 
         return [cls(row) for row in results]
 
@@ -47,12 +50,12 @@ class Mision:
         descripcion=%(descripcion)s,
         updated_at = NOW() WHERE id=%(id)s"""
         
-        return connectToMySQL('VoluntaMe').query_db(query, data)    
+        return connectToMySQL('base_datos_intento_3').query_db(query, data)    
 
     @classmethod
     def get_by_id(cls, data):
         query = "SELECT * FROM misiones WHERE id = %(id)s;"
-        resultados = connectToMySQL('VoluntaMe').query_db(query,data)
+        resultados = connectToMySQL('base_datos_intento_3').query_db(query,data)
 
         if resultados:
             return cls(resultados[0])

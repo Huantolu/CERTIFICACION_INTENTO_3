@@ -95,16 +95,26 @@ def editar_mision():
 
     return redirect("/dashboard")
 
+
+
 @app.route('/ver/<int:mision_id>', methods=['GET'])
 def ver_mision(mision_id):
     if 'usuario_id' not in session:
         flash("Debes iniciar sesión para ver la misión", "error")
         return redirect("/")
 
-    mision = Mision.get_by_id(mision_id)
+    # Buscar la publicación seleccionada
+    mision = Mision.get_by_id({"id": mision_id})
 
     if not mision:
         flash("Misión no encontrada.", "error")
         return redirect('/dashboard')
 
-    return render_template('mision.html', mision=mision)
+    # Buscar solamente al creador de esta publicación
+    lider = Usuario.get_by_id({"id": mision.usuarios_id})
+
+    return render_template(
+        'mision.html',
+        mision=mision,
+        lider=lider
+    )
