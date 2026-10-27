@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
     <title>dashboard</title>
 </head>
 <body>
     <div class="menu">
         <img src="../static/img/people-fill.svg" alt="">
         <h1 class="title">VoluntaMe</h1>
-        <a href="/formulario_mision">
-            <button>Nueva Misión</button>
-        </a>
-        <!-------------------------------------->
-        <a href="/cerrar_sesion">
-            <button>Cerrar Sesión</button>
-        </a>
+        <div class="botones_menu">
+            <a href="/dashboard">
+                <button>Inicio</button>
+            </a>
+            <!-------------------------------------->
+            <a href="/cerrar_sesion">
+                <button>Cerrar Sesión</button>
+            </a>
+        </div>
     </div>
     <div class="superior">
         <h1>Bienvenid@ {{session['nombre']}}</h1>    
@@ -31,16 +34,19 @@
                 </tr>
             </thead>
             <tbody>
+               
                 {% for mision in misiones %}
                 <tr>
                     <td>{{ mision.nombre }}</td>
-                    <td>{{ usuario.nombre }}</td>
+                    {% for lider in lideres %}
+                    <td>{{ lider.nombre }}</td>
+                    {% endfor %}
                     <td>{{ mision.fecha }}</td>
                     <td>{{ mision.voluntarios_necesarios }}</td>
                     <td>
-                        <a href="/ver/{{ mision.id }}">Ver</a>
+                        <a href="{{ url_for('ver_mision', mision_id=mision.id) }}">Ver</a>
                         <!-- Editar o borrar si es el creador del viaje -->
-                        {% if viaje.usuarios_id == session['usuario_id'] %}
+                        {% if mision.usuarios_id == session['usuario_id'] %}
                         <a href="/editar/{{ mision.id }}">Editar</a>
 
                         <!-- Por ahora un botón -->
@@ -51,5 +57,8 @@
                     </td>
                 </tr>
                 {% endfor %}
+            </tbody>
+        </table>
+        
 </body>
 </html>

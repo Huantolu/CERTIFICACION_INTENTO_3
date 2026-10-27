@@ -1,11 +1,35 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles</title>
+    <title>Detalles de la misión</title>
 </head>
 <body>
-    
+
+    <div class="menu">
+        <img src="{{ url_for('static', filename='img/people-fill.svg') }}" alt="">
+        <h1 class="title">VoluntaMe</h1>
+
+        <div class="botones_menu">
+            <a href="/dashboard">
+                <button>Inicio</button>
+            </a>
+
+            <a href="/cerrar_sesion">
+                <button>Cerrar sesión</button>
+            </a>
+        </div>
+    </div>
+
+    <h1>Detalles de la misión</h1>
+
+    <h2>{{ mision.nombre }}</h2>
+
+    <a href="/dashboard">
+        <button>Volver</button>
+    </a>
+
 </body>
 </html>

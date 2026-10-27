@@ -17,27 +17,37 @@ class Mision:
     #registrar usuario / CREAR
     @classmethod
     def save(cls, data):
-        query= "INSERT INTO misiones (nombre, fecha, voluntarios_necesarios, descripcion, created_at, updated_at, usuarios_id) VALUES (%(nombre)s,%(fecha)s,%(voluntarios_necesarios)s,%(descripcion)s, NOW(), NOW(), %(usuarios_id)s);"
-        return connectToMySQL('VoluntaMe').query_db(query, data)
+        query = """
+        INSERT INTO misiones (nombre, fecha, voluntarios_necesarios, descripcion, usuarios_id)
+        VALUES (%(nombre)s, %(fecha)s, %(voluntarios_necesarios)s, %(descripcion)s, %(usuarios_id)s)
+        """
+        return connectToMySQL("VoluntaMe").query_db(query, data)
 
     #Metodos para ver registros
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM misiones;"
-        mision_en_db= connectToMySQL('VoluntaMe').query_db(query)
-        misiones = []
+        query = """
+            SELECT misiones.*, misiones.usuarios_id AS usuario_id,
+                CONCAT(usuarios.nombre,' ') AS usuario_nombre
+            FROM misiones
+            JOIN usuarios ON misiones.usuarios_id = usuarios.id
+        """
 
-        for elemento in mision_en_db:
-            misiones.append(cls(elemento))
 
-        return misiones
+        results = connectToMySQL("VoluntaMe").query_db(query)
+
+        return [cls(row) for row in results]
 
     @classmethod
-    def update(cls, datos):
+    def update(cls, data):
+        query="""UPDATE misiones SET 
+        nombre=%(nombre)s,
+        fecha=%(fecha)s,
+        voluntarios_necesarios=%(voluntarios_necesarios)s,
+        descripcion=%(descripcion)s,
+        updated_at = NOW() WHERE id=%(id)s"""
         
-        query= "UPDATE misiones SET nombre=%(nombre)s, fecha=%(fecha)s, voluntarios_necesarios=%(voluntarios_necesarios)s, descripcion=%(descripcion)s, updated_at = NOW() WHERE id=%(id)s"
-
-        return connectToMySQL('VoluntaMe').query_db(query, datos)
+        return connectToMySQL('VoluntaMe').query_db(query, data)    
 
     @classmethod
     def get_by_id(cls, data):

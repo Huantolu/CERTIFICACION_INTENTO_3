@@ -9,6 +9,7 @@
 <body>
         <form action="/editar_mision" method="post" class="caja">
             <h1>Editar Misión</h1>
+            <input type="hidden" name="id" value="{{mision.id}}">
             <label for="Nombre_mision">Nombre:</label>
             <input type="text" id="Nombre_mision" name="nombre" value="{{ mision.nombre }}">
             <br><br>

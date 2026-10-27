@@ -20,6 +20,7 @@ def ver_pagina():
 
     return render_template('crear_mision.html',usuario_sesion=usuario_sesion)
 
+
 #ruta para procesar registro de la mision
 @app.route('/crear_mision', methods=['POST'])
 def crear_mision():
@@ -33,18 +34,18 @@ def crear_mision():
     descripcion = request.form['descripcion']
     
     datos = {
-         'nombre': nombre,
-         'fecha': fecha,
-         'voluntarios_necesarios': voluntarios_necesarios,
-         'descripcion': descripcion,
-         'usuarios_id': session.get('usuario_id')
+        'nombre': nombre,
+        'fecha': fecha,
+        'voluntarios_necesarios': voluntarios_necesarios,
+        'descripcion': descripcion,
+        'usuarios_id': session.get('usuario_id')
     }
 
     #guardar nuevo dato e iniciar sesión
-    id_nuevo= Mision.save(datos)
+    Mision.save(datos)
 
     return redirect('/dashboard')
-
+#aqui podemos editar los datos antes registrados
 @app.route("/editar/<int:mision_id>")
 def editar(mision_id):
 
@@ -56,34 +57,54 @@ def editar(mision_id):
         "id": mision_id
     }
     mision = Mision.get_by_id(data)
-    data_usuario = {
-        "id": Mision.usuarios_id
+    datos_sesion = {
+        "id": session['usuario_id']
     }
-    lider = Usuario.get_by_id(data_usuario)
+    lider = Usuario.get_by_id(datos_sesion)
 
-    return render_template("editar_mision.html", mision=mision, lider=lider)
+    usuario_sesion = Usuario.get_by_id({'id':session['usuario_id']})
+    return render_template("editar_mision.html", mision=mision, lider=lider, usuario_sesion=usuario_sesion)
 
 @app.route("/editar_mision", methods=['POST'])
 def editar_mision():
+
+
     if 'usuario_id' not in session:
         flash("Debes iniciar sesión para editar", "error")
         return redirect("/")
 
-    id_mision = request.form.get("id_mision")
+    id = request.form.get("id")
+
+    print(id)
     nombre = request.form.get("nombre")
     fecha = request.form.get('fecha')
     voluntarios_necesarios = request.form.get('voluntarios_necesarios')
     descripcion = request.form.get('descripcion')
-    usuario_id = request.form.get('usuario_id')
 
-    Mision.update({
-        "id": id_mision,
+
+    data = {
+        'id': id,
         "nombre": nombre,
         "fecha": fecha,
         "voluntarios_necesarios": voluntarios_necesarios,
         'descripcion': descripcion,
-        "usuarios_id": usuario_id
 
-    })
-    return redirect(f"/mision/{id_mision}")
+    }
+    print(data)
+    Mision.update(data)
 
+    return redirect("/dashboard")
+
+@app.route('/ver/<int:mision_id>', methods=['GET'])
+def ver_mision(mision_id):
+    if 'usuario_id' not in session:
+        flash("Debes iniciar sesión para ver la misión", "error")
+        return redirect("/")
+
+    mision = Mision.get_by_id(mision_id)
+
+    if not mision:
+        flash("Misión no encontrada.", "error")
+        return redirect('/dashboard')
+
+    return render_template('mision.html', mision=mision)

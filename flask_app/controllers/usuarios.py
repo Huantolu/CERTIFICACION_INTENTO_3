@@ -10,6 +10,8 @@ bcrypt= Bcrypt(app)
 #ruta inico
 @app.route('/')
 def inicio():
+    if "usuario_id" in session:
+        return redirect('/dashboard')
     return render_template('index.html')
 
 #ruta para procesar registro
@@ -57,10 +59,14 @@ def iniciar_sesion():
 def index():
     if 'usuario_id' not in session:
         return redirect('/')
-
-    usuario_sesion = Usuario.get_by_id(session['usuario_id'])
-    
-    return render_template('dashboard.html', misiones=Mision.get_all(), usuario_sesion=usuario_sesion)
+    misiones = Mision.get_all()
+    lideres= []
+    for elemento in misiones:
+        datos={
+            "id": elemento.usuarios_id
+        }
+        lideres.append(Usuario.get_by_id(datos))
+    return render_template('dashboard.html', misiones=Mision.get_all(), usuario=session['nombre'], lideres=lideres)
 
 #cerrar sesión
 @app.route('/cerrar_sesion')

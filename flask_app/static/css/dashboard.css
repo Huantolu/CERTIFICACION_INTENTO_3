@@ -1,0 +1,40 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(209, 207, 176);
+}
+.menu{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    color: white;
+    background-color: rgb(84, 197, 84);
+}
+img{
+    margin-left: 60px;
+    scale: 250%;
+}
+.title{
+    margin-left: 30px;
+}
+form{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    height: 500px;
+    width: 500px;
+    border-radius: 2pc;
+}
+.botones_menu{
+    display: flex;
+    justify-content: space-between;
+    
+}
+table{
+    border-color: black;
+    border-style: solid 2px;
+}
