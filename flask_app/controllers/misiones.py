@@ -9,16 +9,29 @@ bcrypt= Bcrypt(app)
 
 @app.route("/formulario_mision")
 def ver_pagina():
-    usuario_sesion = Usuario.get_by_id('usuario_id')
+    if 'usuario_id' not in session:
+        flash("Debes iniciar sesión para crear una misión", "error")
+        return redirect("/")
+    
+    datos_usuario = {
+    'id': session.get('usuario_id')
+    }
+    usuario_sesion = Usuario.get_by_id(datos_usuario)
+
     return render_template('crear_mision.html',usuario_sesion=usuario_sesion)
 
 #ruta para procesar registro de la mision
 @app.route('/crear_mision', methods=['POST'])
 def crear_mision():
-    nombre = request.form['nombre'],
-    fecha = request.form['fecha'],
-    voluntarios_necesarios = request.form['voluntarios_necesarios'],
+    if 'usuario_id' not in session:
+        flash("Debes iniciar sesión para crear una misión", "error")
+        return redirect("/")
+    
+    nombre = request.form['nombre']
+    fecha = request.form['fecha']
+    voluntarios_necesarios = request.form['voluntarios_necesarios']
     descripcion = request.form['descripcion']
+    
     datos = {
          'nombre': nombre,
          'fecha': fecha,
@@ -50,7 +63,7 @@ def editar(mision_id):
 
     return render_template("editar_mision.html", mision=mision, lider=lider)
 
-@app.route("/Editar_mision", methods=['POST'])
+@app.route("/editar_mision", methods=['POST'])
 def editar_mision():
     if 'usuario_id' not in session:
         flash("Debes iniciar sesión para editar", "error")

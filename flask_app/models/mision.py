@@ -8,7 +8,7 @@ class Mision:
         self.id = data.get('id')
         self.nombre = data.get('nombre')
         self.fecha = data.get('fecha')
-        self.voluntarrios_necesarios = data.get('voluntarios_necesarios')
+        self.voluntarios_necesarios = data.get('voluntarios_necesarios')
         self.descripcion = data.get('descripcion')
         self.created_at = data.get('created_at')
         self.updated_at = data.get('updated_at')
@@ -44,4 +44,7 @@ class Mision:
         query = "SELECT * FROM misiones WHERE id = %(id)s;"
         resultados = connectToMySQL('VoluntaMe').query_db(query,data)
 
-        return cls(resultados[0])
+        if resultados:
+            return cls(resultados[0])
+
+        return None
